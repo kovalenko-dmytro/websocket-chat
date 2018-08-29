@@ -2,7 +2,7 @@
 
 var usernamePage = document.querySelector('#username-page');
 var chatPage = document.querySelector('#chat-page');
-var usernameForm = document.querySelector('#usernameForm');
+var usernameClick = document.querySelector('#name');
 var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
@@ -17,7 +17,7 @@ var colors = [
 ];
 
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
+    username = document.querySelector('#name').firstChild.nodeValue;
 
     if(username) {
         usernamePage.classList.add('hidden');
@@ -121,5 +121,5 @@ function onMessageReceived(payload) {
         return colors[index];
     }
 
-    usernameForm.addEventListener('submit', connect, true)
+    usernameClick.addEventListener('click', connect, true)
     messageForm.addEventListener('submit', sendMessage, true)

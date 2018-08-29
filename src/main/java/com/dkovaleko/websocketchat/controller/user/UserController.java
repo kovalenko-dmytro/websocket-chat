@@ -32,17 +32,4 @@ public class UserController {
 
         return view;
     }
-
-    @GetMapping(value = "/users/{userID}")
-    public ModelAndView find(@PathVariable(value = "userID") long userID) {
-
-        ModelAndView view = new ModelAndView();
-
-        User user = userService.find(userID);
-
-        view.addObject("user", user);
-        view.setViewName("chat");
-
-        return view;
-    }
 }
