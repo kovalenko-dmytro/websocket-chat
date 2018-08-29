@@ -1,7 +1,7 @@
-package com.dkovaleko.websocketchat.controller.listener;
+package com.dkovaleko.websocketchat.controller.chat.listener;
 
-import com.dkovaleko.websocketchat.dto.ChatMessage;
-import com.dkovaleko.websocketchat.dto.MessageType;
+import com.dkovaleko.websocketchat.dto.chat.ChatMessage;
+import com.dkovaleko.websocketchat.dto.chat.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

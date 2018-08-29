@@ -1,12 +1,13 @@
-package com.dkovaleko.websocketchat.controller;
+package com.dkovaleko.websocketchat.controller.chat;
 
-import com.dkovaleko.websocketchat.dto.ChatMessage;
-import com.dkovaleko.websocketchat.dto.MessageType;
+import com.dkovaleko.websocketchat.dto.chat.ChatMessage;
+import com.dkovaleko.websocketchat.dto.chat.MessageType;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +22,7 @@ public class ChatController {
         chatMessage.setCreatedDateTime(LocalDateTime.now());
         return chatMessage;
     }
+
 
     @MessageMapping("/chat/addUser")
     @SendTo("/topic/public")
