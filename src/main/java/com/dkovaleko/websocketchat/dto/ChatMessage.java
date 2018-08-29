@@ -3,9 +3,9 @@ package com.dkovaleko.websocketchat.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Data
 @NoArgsConstructor
@@ -15,5 +15,9 @@ public class ChatMessage {
     private MessageType messageType;
     private String content;
     private String sender;
-    private LocalDateTime createdDateTime;
+    private String createdDateTime;
+
+    public void setCreatedDateTime(LocalDateTime dateTime) {
+        this.createdDateTime = dateTime.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy HH:mm:ss a"));
+    }
 }
