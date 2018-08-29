@@ -23,11 +23,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${users != null}" th:each="user: ${users}">
-                        <th th:text="${user.userID}"></th>
-                        <th>
-                           <button th:text="${user.name}" id="name" class="btn btn-sm btn-warning btn-block"></button>
-                        </th>
+                    <tr  th:if="${users != null}" th:each="user: ${users}">
+                        <td th:text="${user.userID}"></td>
+                        <td th:text="${user.name}"></td>
+                        <td >
+                            <a class="btn btn-sm btn-success btn-block" th:href="@{'/users/' + ${user.userID} + '/chat'}">To chat</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
