@@ -14,7 +14,7 @@
         <h1 class="title">Type your username</h1>
         <form id="usernameForm" name="usernameForm" th:object="${user}">
             <div class="form-group">
-                <input type="text" id="name" th:value="${user.name}" autocomplete="off" class="form-control" />
+                <input type="text" id="name" th:value="${user.name}" autocomplete="off" class="hidden form-control" />
             </div>
             <div class="form-group">
                 <button type="submit" class="accent username-submit">Start Chatting</button>
