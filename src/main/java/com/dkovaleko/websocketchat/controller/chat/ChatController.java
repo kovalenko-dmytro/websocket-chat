@@ -36,7 +36,7 @@ public class ChatController {
 
     @MessageMapping("/chat/addUser")
     @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage,
+    public List<ChatMessage> addUser(@Payload ChatMessage chatMessage,
                                SimpMessageHeaderAccessor headerAccessor) {
 
         headerAccessor.getSessionAttributes().put("userName", chatMessage.getSender());
@@ -45,7 +45,8 @@ public class ChatController {
         chatMessage.setMessageType(MessageType.JOIN);
 
         List<ChatMessage> messages = chatService.find();
-        chatMessage.setMessages(messages);
-        return chatMessage;
+        messages.add(chatMessage);
+
+        return messages;
     }
 }

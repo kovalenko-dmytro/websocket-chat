@@ -69,83 +69,57 @@ function sendMessage(event) {
     event.preventDefault();
 }
 
-function onMessageReceived(payload) {
-    var message = JSON.parse(payload.body);
+    function onMessageReceived(payload) {
 
-    if(message.messageType === 'JOIN' && message.messages != null) {
-        var messages = message.messages;
-        for (var i = 0; i < messages.length; i++) {
-           var messageElement = document.createElement('li');
+        var messages = JSON.parse(payload.body);
 
-           messageElement.classList.add('chat-message');
+        if(Array.isArray(messages)) {
 
-                   var avatarElement = document.createElement('i');
-                   var avatarText = document.createTextNode(messages[i].sender);
-                   avatarElement.appendChild(avatarText);
-                   avatarElement.style['background-color'] = getAvatarColor(messages[i].sender);
+            for (var i = 0; i < messages.length; i++) {
+                renderMessage(messages[i]);
+            }
 
-                   messageElement.appendChild(avatarElement);
-
-                   var usernameElement = document.createElement('span');
-                   var usernameText = document.createTextNode(messages[i].sender);
-                   usernameElement.appendChild(usernameText);
-                   messageElement.appendChild(usernameElement);
-
-                   var textElement = document.createElement('p');
-                           var messageText = document.createTextNode(messages[i].content);
-                           textElement.appendChild(messageText);
-
-                           messageElement.appendChild(textElement);
-
-                           messageArea.appendChild(messageElement);
-                           messageArea.scrollTop = messageArea.scrollHeight;
-
-                   var timeElement = document.createElement('p');
-                           var messageDate = document.createTextNode(messages[i].createdDateTime);
-                           timeElement.appendChild(messageDate);
-
-                           messageElement.appendChild(timeElement);
-
-                           messageArea.appendChild(messageElement);
-                           messageArea.scrollTop = messageArea.scrollHeight;
+        } else {
+            renderMessage(messages);
         }
+
     }
 
-    var messageElement = document.createElement('li');
+    function renderMessage(messages) {
+        var messageElement = document.createElement('li');
+            if(messages.messageType === 'JOIN') {
+                messageElement.classList.add('event-message');
+                messages.content = messages.sender + ' joined!';
+            } else if (messages.messageType === 'LEAVE') {
+                messageElement.classList.add('event-message');
+                messages.content = messages.sender + ' left!';
+            } else {
+                messageElement.classList.add('chat-message');
 
-    if(message.messageType === 'JOIN') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
-    } else if (message.messageType === 'LEAVE') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' left!';
-    } else {
-        messageElement.classList.add('chat-message');
+                var avatarElement = document.createElement('i');
+                var avatarText = document.createTextNode(messages.sender);
+                avatarElement.appendChild(avatarText);
+                avatarElement.style['background-color'] = getAvatarColor(messages.sender[0]);
 
-        var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(message.sender[0]);
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+                messageElement.appendChild(avatarElement);
 
-        messageElement.appendChild(avatarElement);
+                var usernameElement = document.createElement('span');
+                var usernameText = document.createTextNode(messages.sender);
+                usernameElement.appendChild(usernameText);
+                messageElement.appendChild(usernameElement);
+            }
 
-        var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(message.sender);
-        usernameElement.appendChild(usernameText);
-        messageElement.appendChild(usernameElement);
-    }
+                var textElement = document.createElement('p');
+                var messageText = document.createTextNode(messages.content);
+                textElement.appendChild(messageText);
 
-    var textElement = document.createElement('p');
-        var messageText = document.createTextNode(message.content);
-        textElement.appendChild(messageText);
+                messageElement.appendChild(textElement);
 
-        messageElement.appendChild(textElement);
+                messageArea.appendChild(messageElement);
+                messageArea.scrollTop = messageArea.scrollHeight;
 
-        messageArea.appendChild(messageElement);
-        messageArea.scrollTop = messageArea.scrollHeight;
-
-        var timeElement = document.createElement('p');
-                var messageDate = document.createTextNode(message.createdDateTime);
+                var timeElement = document.createElement('p');
+                var messageDate = document.createTextNode(messages.createdDateTime);
                 timeElement.appendChild(messageDate);
 
                 messageElement.appendChild(timeElement);
