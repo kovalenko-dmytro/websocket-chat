@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 
 public class ChatMessageRowMapper implements RowMapper<ChatMessage> {
 
@@ -17,7 +18,7 @@ public class ChatMessageRowMapper implements RowMapper<ChatMessage> {
                 MessageType.valueOf(resultSet.getString("message_type")),
                 resultSet.getString("message_content"),
                 resultSet.getString("name"),
-                resultSet.getString("created"),
+                resultSet.getTimestamp("created").toLocalDateTime(),
                 resultSet.getLong("user_id")
         );
     }
