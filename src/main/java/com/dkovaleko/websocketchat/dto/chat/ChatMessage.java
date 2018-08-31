@@ -12,11 +12,12 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class ChatMessage {
 
-    private long userID;
+    private long messageID;
     private MessageType messageType;
     private String content;
     private String sender;
     private String createdDateTime;
+    private long userID;
 
     public void setCreatedDateTime(LocalDateTime dateTime) {
         this.createdDateTime = dateTime.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy HH:mm:ss a"));
