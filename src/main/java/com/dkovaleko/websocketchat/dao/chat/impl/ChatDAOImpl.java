@@ -36,17 +36,21 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public List<ChatMessage> find(long userID) {
+    public List<ChatMessage> find(long userID, long interval) {
         return null;
     }
 
     @Override
-    public List<ChatMessage> find() {
+    public List<ChatMessage> find(long interval) {
+
+        Object[] params = {interval};
 
         return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, m.created, m.user_id, u.name " +
                         "FROM messages m " +
                         "INNER JOIN users u ON m.user_id = u.user_id " +
+                        "WHERE m.created >= now() - INTERVAL ? hour " +
                         "ORDER BY m.created",
+                params,
                 new ChatMessageRowMapper());
     }
 }

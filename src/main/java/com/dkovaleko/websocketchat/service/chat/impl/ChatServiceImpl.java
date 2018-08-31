@@ -1,5 +1,6 @@
 package com.dkovaleko.websocketchat.service.chat.impl;
 
+import com.dkovaleko.websocketchat.constants.ConstantsEnum;
 import com.dkovaleko.websocketchat.dao.chat.ChatDAO;
 import com.dkovaleko.websocketchat.dto.chat.ChatMessage;
 import com.dkovaleko.websocketchat.service.chat.ChatService;
@@ -32,6 +33,6 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatMessage> find() {
 
-        return chatDAO.find();
+        return chatDAO.find(ConstantsEnum.LAST_MESSAGES_INTERVAL.getValue());
     }
 }
