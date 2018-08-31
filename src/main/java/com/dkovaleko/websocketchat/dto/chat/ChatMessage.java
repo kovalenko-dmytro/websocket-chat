@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class ChatMessage {
 
+    private long userID;
     private MessageType messageType;
     private String content;
     private String sender;
