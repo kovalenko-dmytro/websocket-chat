@@ -1,6 +1,8 @@
 package com.dkovaleko.websocketchat.controller.user;
 
+import com.dkovaleko.websocketchat.dto.chat.ChatMessage;
 import com.dkovaleko.websocketchat.dto.user.User;
+import com.dkovaleko.websocketchat.service.chat.ChatService;
 import com.dkovaleko.websocketchat.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final ChatService chatService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ChatService chatService) {
         this.userService = userService;
+        this.chatService = chatService;
     }
 
     @GetMapping(value = "/")

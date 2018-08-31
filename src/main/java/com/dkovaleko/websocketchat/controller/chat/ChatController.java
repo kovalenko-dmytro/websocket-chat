@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Controller
@@ -43,6 +44,8 @@ public class ChatController {
         chatMessage.setCreatedDateTime(LocalDateTime.now());
         chatMessage.setMessageType(MessageType.JOIN);
 
+        List<ChatMessage> messages = chatService.find();
+        chatMessage.setMessages(messages);
         return chatMessage;
     }
 }

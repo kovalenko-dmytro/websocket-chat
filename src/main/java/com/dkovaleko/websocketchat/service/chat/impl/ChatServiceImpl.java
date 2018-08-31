@@ -6,6 +6,8 @@ import com.dkovaleko.websocketchat.service.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ChatServiceImpl implements ChatService {
 
@@ -20,5 +22,16 @@ public class ChatServiceImpl implements ChatService {
     public void save(ChatMessage chatMessage) {
 
         chatDAO.save(chatMessage);
+    }
+
+    @Override
+    public List<ChatMessage> find(long userID) {
+        return null;
+    }
+
+    @Override
+    public List<ChatMessage> find() {
+
+        return chatDAO.find();
     }
 }

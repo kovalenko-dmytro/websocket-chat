@@ -1,10 +1,13 @@
 package com.dkovaleko.websocketchat.dao.chat.impl;
 
 import com.dkovaleko.websocketchat.dao.chat.ChatDAO;
+import com.dkovaleko.websocketchat.dao.chat.mapper.ChatMessageRowMapper;
 import com.dkovaleko.websocketchat.dto.chat.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class ChatDAOImpl implements ChatDAO {
@@ -30,5 +33,19 @@ public class ChatDAOImpl implements ChatDAO {
                         "VALUES(?,?,?,?)",
                 params);
 
+    }
+
+    @Override
+    public List<ChatMessage> find(long userID) {
+        return null;
+    }
+
+    @Override
+    public List<ChatMessage> find() {
+
+        return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, m.created, m.user_id, u.name " +
+                        "FROM messages m " +
+                        "INNER JOIN users u ON m.user_id = u.user_id ",
+                new ChatMessageRowMapper());
     }
 }
