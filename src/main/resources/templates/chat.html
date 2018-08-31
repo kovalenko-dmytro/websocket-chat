@@ -11,7 +11,6 @@
 
 <div id="username-page">
     <div class="username-page-container">
-
         <form id="usernameForm" name="usernameForm" th:object="${user}">
             <div class="form-group">
                 <input type="text" id="name" th:value="${user.name}" autocomplete="off" class="hidden form-control" />
@@ -45,6 +44,19 @@
                 </div>
             </div>
         </form>
+        <form id="selectRoomForm" name="selectRoomForm" th:if="${rooms != null}">
+            <div class="input-group custom-search-form">
+                <select id="room" name="room" class="form-control">
+                    <option selected>Выбрать...</option>
+                    <option th:each="room: ${rooms}"
+                            th:value="${room}"
+                            th:text="${room}">
+                    </option>
+                </select>
+                <button type="submit" class="primary">Choose room</button>
+            </div>
+        </form>
+
     </div>
 </div>
 
