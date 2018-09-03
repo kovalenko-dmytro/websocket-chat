@@ -39,9 +39,10 @@ function onConnected() {
 
     var chatHeader = document.getElementsByClassName('chat-header')[0];
     var roomNameHeader = document.createElement('h3');
-    var roomNameText = document.createTextNode('Chat: all');
+    var roomNameText = document.createTextNode('Chat: ' + rooms[0].roomName);
     roomNameHeader.appendChild(roomNameText);
     chatHeader.appendChild(roomNameHeader);
+
 
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
@@ -49,7 +50,7 @@ function onConnected() {
     // Tell your username to the server
     stompClient.send("/app/chat/addUser",
         {},
-        JSON.stringify({sender: username, 'senderID': senderID, 'chatRoom': {'roomID': 1, 'roomName': 'all'}, messageType: 'JOIN'})
+        JSON.stringify({sender: username, 'senderID': senderID, 'chatRoom': {'roomID': rooms[0].roomID, 'roomName': rooms[0].roomName}, messageType: 'JOIN'})
     )
 
     connectingElement.classList.add('hidden');
@@ -66,7 +67,7 @@ function sendMessage(event) {
     if(messageContent && stompClient) {
         var chatMessage = {
             'senderID': senderID,
-            'chatRoom': {'roomID': 1, 'roomName': 'all'},
+            'chatRoom': {'roomID': rooms[0].roomID, 'roomName': rooms[0].roomName},
             sender: username,
             content: messageInput.value,
             messageType: 'CHAT'
