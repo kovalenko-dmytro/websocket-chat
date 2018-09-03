@@ -26,10 +26,10 @@ public class ChatDAOImpl implements ChatDAO {
                 chatMessage.getMessageType().toString(),
                 chatMessage.getContent(),
                 chatMessage.getCreatedDateTime(),
-                chatMessage.getUserID()
+                chatMessage.getSenderID()
         };
 
-        jdbcTemplate.update("INSERT INTO messages (message_type, message_content, created, user_id) " +
+        jdbcTemplate.update("INSERT INTO messages (message_type, message_content, created, sender_id) " +
                         "VALUES(?,?,?,?)",
                 params);
 
@@ -45,9 +45,9 @@ public class ChatDAOImpl implements ChatDAO {
 
         Object[] params = {interval};
 
-        return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, m.created, m.user_id, u.name " +
+        return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, m.created, m.sender_id, u.name " +
                         "FROM messages m " +
-                        "INNER JOIN users u ON m.user_id = u.user_id " +
+                        "INNER JOIN users u ON m.sender_id = u.user_id " +
                         "WHERE m.created >= now() - INTERVAL ? hour " +
                         "ORDER BY m.created",
                 params,

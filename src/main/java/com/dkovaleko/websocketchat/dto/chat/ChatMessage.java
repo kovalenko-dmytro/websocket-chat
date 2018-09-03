@@ -17,17 +17,17 @@ public class ChatMessage {
     private String content;
     private String sender;
     private LocalDateTime createdDateTime;
-    private long userID;
+    private long senderID;
     private List<ChatMessage> messages;
 
     public ChatMessage(long messageID, MessageType messageType, String content,
-                       String sender, LocalDateTime createdDateTime, long userID) {
+                       String sender, LocalDateTime createdDateTime, long senderID) {
 
         this.messageID = messageID;
         this.messageType = messageType;
         this.content = content;
         this.sender = sender;
         this.createdDateTime = createdDateTime;
-        this.userID = userID;
+        this.senderID = senderID;
     }
 }

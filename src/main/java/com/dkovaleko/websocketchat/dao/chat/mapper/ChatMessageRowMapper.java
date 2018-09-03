@@ -19,7 +19,7 @@ public class ChatMessageRowMapper implements RowMapper<ChatMessage> {
                 resultSet.getString("message_content"),
                 resultSet.getString("name"),
                 resultSet.getTimestamp("created").toLocalDateTime(),
-                resultSet.getLong("user_id")
+                resultSet.getLong("sender_id")
         );
     }
 }
