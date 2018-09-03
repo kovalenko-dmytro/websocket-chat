@@ -36,6 +36,13 @@ function connect(event) {
 
 
 function onConnected() {
+
+    var chatHeader = document.getElementsByClassName('chat-header')[0];
+    var roomNameHeader = document.createElement('h3');
+    var roomNameText = document.createTextNode('Chat: all');
+    roomNameHeader.appendChild(roomNameText);
+    chatHeader.appendChild(roomNameHeader);
+
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
 
@@ -87,6 +94,7 @@ function sendMessage(event) {
     }
 
     function renderMessage(messages) {
+
         var messageElement = document.createElement('li');
             if(messages.messageType === 'JOIN') {
                 messageElement.classList.add('event-message');
