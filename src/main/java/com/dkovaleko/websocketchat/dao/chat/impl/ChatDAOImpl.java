@@ -26,29 +26,26 @@ public class ChatDAOImpl implements ChatDAO {
                 chatMessage.getMessageType().toString(),
                 chatMessage.getContent(),
                 chatMessage.getCreatedDateTime(),
-                chatMessage.getSenderID()
+                chatMessage.getSenderID(),
+                chatMessage.getChatRoom().getRoomID()
         };
 
-        jdbcTemplate.update("INSERT INTO messages (message_type, message_content, created, sender_id) " +
-                        "VALUES(?,?,?,?)",
+        jdbcTemplate.update("INSERT INTO messages (message_type, message_content, created, sender_id, room_id) " +
+                        "VALUES(?,?,?,?,?)",
                 params);
 
     }
 
     @Override
-    public List<ChatMessage> find(long userID, long interval) {
-        return null;
-    }
+    public List<ChatMessage> find(long roomID, long interval) {
 
-    @Override
-    public List<ChatMessage> find(long interval) {
+        Object[] params = {roomID, interval};
 
-        Object[] params = {interval};
-
-        return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, m.created, m.sender_id, u.name " +
+        return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, m.created, m.sender_id, u.name, cr.room_id, cr.room_name " +
                         "FROM messages m " +
                         "INNER JOIN users u ON m.sender_id = u.user_id " +
-                        "WHERE m.created >= now() - INTERVAL ? hour " +
+                        "INNER JOIN chat_rooms cr ON m.room_id = cr.room_id " +
+                        "WHERE m.room_id = ? AND m.created >= now() - INTERVAL ? hour " +
                         "ORDER BY m.created",
                 params,
                 new ChatMessageRowMapper());

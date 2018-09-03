@@ -26,13 +26,8 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<ChatMessage> find(long userID) {
-        return null;
-    }
+    public List<ChatMessage> find(long roomID) {
 
-    @Override
-    public List<ChatMessage> find() {
-
-        return chatDAO.find(ConstantsEnum.LAST_MESSAGES_INTERVAL.getValue());
+        return chatDAO.find(roomID, ConstantsEnum.LAST_MESSAGES_INTERVAL.getValue());
     }
 }

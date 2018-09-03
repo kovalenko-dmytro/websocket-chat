@@ -9,7 +9,5 @@ public interface ChatService {
 
     void save(ChatMessage chatMessage);
 
-    List<ChatMessage> find(long userID);
-
-    List<ChatMessage> find();
+    List<ChatMessage> find(long roomID);
 }

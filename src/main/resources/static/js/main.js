@@ -42,7 +42,7 @@ function onConnected() {
     // Tell your username to the server
     stompClient.send("/app/chat/addUser",
         {},
-        JSON.stringify({sender: username, 'senderID': senderID, messageType: 'JOIN'})
+        JSON.stringify({sender: username, 'senderID': senderID, 'chatRoom': {'roomID': 1, 'roomName': 'all'}, messageType: 'JOIN'})
     )
 
     connectingElement.classList.add('hidden');
@@ -59,6 +59,7 @@ function sendMessage(event) {
     if(messageContent && stompClient) {
         var chatMessage = {
             'senderID': senderID,
+            'chatRoom': {'roomID': 1, 'roomName': 'all'},
             sender: username,
             content: messageInput.value,
             messageType: 'CHAT'

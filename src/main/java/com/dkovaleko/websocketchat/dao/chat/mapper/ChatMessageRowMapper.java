@@ -1,6 +1,7 @@
 package com.dkovaleko.websocketchat.dao.chat.mapper;
 
 import com.dkovaleko.websocketchat.dto.chat.ChatMessage;
+import com.dkovaleko.websocketchat.dto.chat.ChatRoom;
 import com.dkovaleko.websocketchat.dto.chat.MessageType;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -19,7 +20,11 @@ public class ChatMessageRowMapper implements RowMapper<ChatMessage> {
                 resultSet.getString("message_content"),
                 resultSet.getString("name"),
                 resultSet.getTimestamp("created").toLocalDateTime(),
-                resultSet.getLong("sender_id")
+                resultSet.getLong("sender_id"),
+                new ChatRoom(
+                        resultSet.getLong("room_id"),
+                        resultSet.getString("room_name")
+                )
         );
     }
 }

@@ -42,9 +42,8 @@ public class ChatController {
         headerAccessor.getSessionAttributes().put("userName", chatMessage.getSender());
 
         chatMessage.setCreatedDateTime(LocalDateTime.now());
-        chatMessage.setMessageType(MessageType.JOIN);
 
-        List<ChatMessage> messages = chatService.find();
+        List<ChatMessage> messages = chatService.find(chatMessage.getChatRoom().getRoomID());
         messages.add(chatMessage);
 
         return messages;

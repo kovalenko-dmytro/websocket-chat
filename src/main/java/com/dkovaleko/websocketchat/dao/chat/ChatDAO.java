@@ -8,7 +8,5 @@ public interface ChatDAO {
 
     void save(ChatMessage chatMessage);
 
-    List<ChatMessage> find(long userID, long interval);
-
-    List<ChatMessage> find(long interval);
+    List<ChatMessage> find(long roomID, long interval);
 }
