@@ -38,15 +38,15 @@ function connect(event) {
 
 function onConnected() {
 
-    var chatHeader = document.getElementsByClassName('chat-header')[0];
-    var roomNameHeader = document.createElement('h3');
-    var roomNameText = document.createTextNode('Chat: ' + rooms[0].roomName);
-    roomNameHeader.appendChild(roomNameText);
-    chatHeader.appendChild(roomNameHeader);
-
     var sel = document.getElementById("room");
     var text = sel.options[sel.selectedIndex].text;
     var val = sel.options[sel.selectedIndex].value;
+
+    var chatHeader = document.getElementsByClassName('chat-header')[0];
+    var roomNameHeader = document.createElement('h3');
+    var roomNameText = document.createTextNode('Chat: ' + text);
+    roomNameHeader.appendChild(roomNameText);
+    chatHeader.appendChild(roomNameHeader);
 
 
             // Subscribe to the Public Topic
