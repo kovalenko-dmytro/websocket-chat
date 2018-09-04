@@ -25,4 +25,10 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
         return jdbcTemplate.query("SELECT room_id, room_name FROM chat_rooms",
                 new ChatRoomRowMapper());
     }
+
+    @Override
+    public void save(ChatRoom chatRoom) {
+
+        jdbcTemplate.update("INSERT INTO chat_rooms (room_name) VALUES(?)", chatRoom.getRoomName());
+    }
 }

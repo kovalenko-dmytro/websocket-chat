@@ -46,8 +46,8 @@
         </form>
         <form id="selectRoomForm" name="selectRoomForm" th:if="${rooms != null}">
             <div class="input-group custom-search-form">
-                <select id="room" name="room" class="form-control" th:each="room: ${rooms}">
-                    <option
+                <select id="room" name="room" class="form-control" >
+                    <option th:each="room: ${rooms}"
                             th:value="${room.roomName}"
                             th:text="${room.roomName}">
                     </option>
@@ -55,7 +55,14 @@
                 <button type="submit" class="primary">Choose room</button>
             </div>
         </form>
-
+        <form id="roomForm" name="roomForm" method="post" th:action="@{'/users/' + ${user.userID} + '/chat/rooms/create'}" th:object="${chatRoom}">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input type="text" id="roomName"  th:field="*{roomName}" placeholder="enter room name"  class="form-control"/>
+                    <button type="submit" class="primary">Send</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 

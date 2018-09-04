@@ -1,7 +1,8 @@
 package com.dkovaleko.websocketchat.controller.chat;
 
 import com.dkovaleko.websocketchat.dto.chat.ChatMessage;
-import com.dkovaleko.websocketchat.dto.chat.MessageType;
+import com.dkovaleko.websocketchat.dto.chat.ChatRoom;
+import com.dkovaleko.websocketchat.service.chat.ChatRoomService;
 import com.dkovaleko.websocketchat.service.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -9,6 +10,8 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,10 +21,12 @@ import java.util.List;
 public class ChatController {
 
     private final ChatService chatService;
+    private final ChatRoomService chatRoomService;
 
     @Autowired
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, ChatRoomService chatRoomService) {
         this.chatService = chatService;
+        this.chatRoomService = chatRoomService;
     }
 
     @MessageMapping("/chat/sendMessage")

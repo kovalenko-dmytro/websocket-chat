@@ -1,5 +1,6 @@
 package com.dkovaleko.websocketchat.controller.user;
 
+import com.dkovaleko.websocketchat.dto.chat.ChatRoom;
 import com.dkovaleko.websocketchat.dto.user.User;
 import com.dkovaleko.websocketchat.service.chat.ChatRoomService;
 import com.dkovaleko.websocketchat.service.chat.ChatService;
@@ -7,6 +8,7 @@ import com.dkovaleko.websocketchat.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{userID}/chat")
-    public ModelAndView chat(@PathVariable(value = "userID") long userID) {
+    public ModelAndView chat(@PathVariable(value = "userID") long userID, ChatRoom chatRoom) {
 
         ModelAndView view = new ModelAndView();
 
@@ -48,6 +50,7 @@ public class UserController {
 
         view.addObject("user", user);
         view.addObject("rooms",chatRoomService.find());
+        view.addObject("chatRoom", chatRoom);
         view.setViewName("chat");
 
         return view;

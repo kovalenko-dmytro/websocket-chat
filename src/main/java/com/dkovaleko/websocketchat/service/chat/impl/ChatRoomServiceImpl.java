@@ -22,4 +22,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     public List<ChatRoom> find() {
         return chatRoomDAO.find();
     }
+
+    @Override
+    public void save(ChatRoom chatRoom) {
+        chatRoomDAO.save(chatRoom);
+    }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface ChatRoomDAO {
 
     List<ChatRoom> find();
+
+    void save(ChatRoom chatRoom);
 }
