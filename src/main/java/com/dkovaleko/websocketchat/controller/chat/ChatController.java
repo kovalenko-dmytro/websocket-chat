@@ -5,6 +5,7 @@ import com.dkovaleko.websocketchat.dto.chat.ChatRoom;
 import com.dkovaleko.websocketchat.service.chat.ChatRoomService;
 import com.dkovaleko.websocketchat.service.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -29,9 +30,9 @@ public class ChatController {
         this.chatRoomService = chatRoomService;
     }
 
-    @MessageMapping("/chat/sendMessage")
-    @SendTo("/topic/public")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+    @MessageMapping("/chat/sendMessage/{roomID}")
+    @SendTo("/topic/public/{roomID}")
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String roomID) {
 
         chatMessage.setCreatedDateTime(LocalDateTime.now());
         chatService.save(chatMessage);
@@ -39,9 +40,9 @@ public class ChatController {
         return chatMessage;
     }
 
-    @MessageMapping("/chat/addUser")
-    @SendTo("/topic/public")
-    public List<ChatMessage> addUser(@Payload ChatMessage chatMessage,
+    @MessageMapping("/chat/addUser/{roomID}")
+    @SendTo("/topic/public/{roomID}")
+    public List<ChatMessage> addUser(@Payload ChatMessage chatMessage, @DestinationVariable String roomID,
                                SimpMessageHeaderAccessor headerAccessor) {
 
         headerAccessor.getSessionAttributes().put("userName", chatMessage.getSender());

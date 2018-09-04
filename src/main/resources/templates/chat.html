@@ -48,7 +48,7 @@
             <div class="input-group custom-search-form">
                 <select id="room" name="room" class="form-control" >
                     <option th:each="room: ${rooms}"
-                            th:value="${room.roomName}"
+                            th:value="${room.roomID}"
                             th:text="${room.roomName}">
                     </option>
                 </select>

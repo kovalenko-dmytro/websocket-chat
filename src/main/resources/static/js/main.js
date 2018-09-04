@@ -44,15 +44,21 @@ function onConnected() {
     roomNameHeader.appendChild(roomNameText);
     chatHeader.appendChild(roomNameHeader);
 
+    var sel = document.getElementById("room");
+    var text = sel.options[sel.selectedIndex].text;
+    var val = sel.options[sel.selectedIndex].value;
 
-    // Subscribe to the Public Topic
-    stompClient.subscribe('/topic/public', onMessageReceived);
 
-    // Tell your username to the server
-    stompClient.send("/app/chat/addUser",
-        {},
-        JSON.stringify({sender: username, 'senderID': senderID, 'chatRoom': {'roomID': rooms[0].roomID, 'roomName': rooms[0].roomName}, messageType: 'JOIN'})
-    )
+            // Subscribe to the Public Topic
+                stompClient.subscribe('/topic/public/{' + val + '}', onMessageReceived);
+
+                // Tell your username to the server
+                stompClient.send("/app/chat/addUser/" + val + "",
+                    {},
+                    JSON.stringify({sender: username, 'senderID': senderID, 'chatRoom': {'roomID': val, 'roomName': text}, messageType: 'JOIN'})
+                )
+
+
 
     connectingElement.classList.add('hidden');
 }
@@ -66,15 +72,23 @@ function onError(error) {
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
     if(messageContent && stompClient) {
-        var chatMessage = {
-            'senderID': senderID,
-            'chatRoom': {'roomID': rooms[0].roomID, 'roomName': rooms[0].roomName},
-            sender: username,
-            content: messageInput.value,
-            messageType: 'CHAT'
-        };
-        stompClient.send("/app/chat/sendMessage", {}, JSON.stringify(chatMessage));
-        messageInput.value = '';
+
+        var sel = document.getElementById("room");
+        var text = sel.options[sel.selectedIndex].text;
+        var val = sel.options[sel.selectedIndex].value;
+
+            var chatMessage = {
+                        'senderID': senderID,
+                        'chatRoom': {'roomID':  val, 'roomName': text},
+                        sender: username,
+                        content: messageInput.value,
+                        messageType: 'CHAT'
+                    };
+
+            stompClient.send("/app/chat/sendMessage/" + val, {}, JSON.stringify(chatMessage));
+            messageInput.value = '';
+
+
     }
     event.preventDefault();
 }
