@@ -55,7 +55,7 @@
                 <button type="submit" class="primary">Choose room</button>
             </div>
         </form>
-        <form id="roomForm" name="roomForm" method="post" th:action="@{'/users/' + ${user.userID} + '/chat/rooms/create'}" th:object="${chatRoom}">
+        <form id="roomForm" name="roomForm" method="post" th:action="@{'/users/' + ${user.userID} + '/chat/rooms/create'}" th:object="${chatRoom}" style="padding-top: 10px;">
             <div class="form-group">
                 <div class="input-group clearfix">
                     <input type="text" id="roomName"  th:field="*{roomName}" placeholder="enter room name"  class="form-control"/>
