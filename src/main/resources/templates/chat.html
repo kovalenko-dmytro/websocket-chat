@@ -18,6 +18,12 @@
             <div class="form-group">
                 <input type="text" id="userID" th:value="${user.userID}" autocomplete="off" class="hidden form-control" />
             </div>
+            <select id="room" name="room" class="form-control" >
+                <option th:each="room: ${rooms}"
+                        th:value="${room.roomID}"
+                        th:text="${room.roomName}">
+                </option>
+            </select>
             <div class="form-group">
                 <button type="submit" id="username-submit-button" class="accent username-submit">Start Chatting</button>
             </div>
@@ -46,12 +52,7 @@
         </form>
         <form id="selectRoomForm" name="selectRoomForm" th:if="${rooms != null}">
             <div class="input-group custom-search-form">
-                <select id="room" name="room" class="form-control" >
-                    <option th:each="room: ${rooms}"
-                            th:value="${room.roomID}"
-                            th:text="${room.roomName}">
-                    </option>
-                </select>
+
                 <button type="submit" class="primary">Choose room</button>
             </div>
         </form>

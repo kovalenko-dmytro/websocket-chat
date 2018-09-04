@@ -12,6 +12,8 @@ var connectingElement = document.querySelector('.connecting');
 var stompClient = null;
 var username = null;
 var senderID = null;
+var roomID = null;
+var roomName = null;
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -22,6 +24,8 @@ var colors = [
 function connect(event) {
     username = document.querySelector('#name').value.trim();
     senderID = document.querySelector('#userID').value.trim();
+    roomID = document.querySelector('#room').value;
+    roomName = document.querySelector('#room').options[ document.querySelector('#room').selectedIndex ].text;
 
     if(username) {
         usernamePage.classList.add('hidden');
@@ -38,24 +42,20 @@ function connect(event) {
 
 function onConnected() {
 
-    var sel = document.getElementById("room");
-    var text = sel.options[sel.selectedIndex].text;
-    var val = sel.options[sel.selectedIndex].value;
-
     var chatHeader = document.getElementsByClassName('chat-header')[0];
     var roomNameHeader = document.createElement('h3');
-    var roomNameText = document.createTextNode('Chat: ' + text);
+    var roomNameText = document.createTextNode('Chat: ' + roomName);
     roomNameHeader.appendChild(roomNameText);
     chatHeader.appendChild(roomNameHeader);
 
 
             // Subscribe to the Public Topic
-                stompClient.subscribe('/topic/public/{' + val + '}', onMessageReceived);
+                stompClient.subscribe('/topic/public/{' + roomID + '}', onMessageReceived);
 
                 // Tell your username to the server
-                stompClient.send("/app/chat/addUser/" + val + "",
+                stompClient.send("/app/chat/addUser/" + roomID + "",
                     {},
-                    JSON.stringify({sender: username, 'senderID': senderID, 'chatRoom': {'roomID': val, 'roomName': text}, messageType: 'JOIN'})
+                    JSON.stringify({sender: username, 'senderID': senderID, 'chatRoom': {'roomID': roomID, 'roomName': roomName}, messageType: 'JOIN'})
                 )
 
 
@@ -73,19 +73,15 @@ function sendMessage(event) {
     var messageContent = messageInput.value.trim();
     if(messageContent && stompClient) {
 
-        var sel = document.getElementById("room");
-        var text = sel.options[sel.selectedIndex].text;
-        var val = sel.options[sel.selectedIndex].value;
-
             var chatMessage = {
                         'senderID': senderID,
-                        'chatRoom': {'roomID':  val, 'roomName': text},
+                        'chatRoom': {'roomID':  roomID, 'roomName': roomName},
                         sender: username,
                         content: messageInput.value,
                         messageType: 'CHAT'
                     };
 
-            stompClient.send("/app/chat/sendMessage/" + val, {}, JSON.stringify(chatMessage));
+            stompClient.send("/app/chat/sendMessage/" + roomID, {}, JSON.stringify(chatMessage));
             messageInput.value = '';
 
 
@@ -111,46 +107,52 @@ function sendMessage(event) {
 
     function renderMessage(messages) {
 
+    if(messages.chatRoom.roomID === parseInt(roomID, 10)) {
+
         var messageElement = document.createElement('li');
-            if(messages.messageType === 'JOIN') {
-                messageElement.classList.add('event-message');
-                messages.content = messages.sender + ' joined!';
-            } else if (messages.messageType === 'LEAVE') {
-                messageElement.classList.add('event-message');
-                messages.content = messages.sender + ' left!';
-            } else {
-                messageElement.classList.add('chat-message');
+                    if(messages.messageType === 'JOIN') {
+                        messageElement.classList.add('event-message');
+                        messages.content = messages.sender + ' joined!';
+                    } else if (messages.messageType === 'LEAVE') {
+                        messageElement.classList.add('event-message');
+                        messages.content = messages.sender + ' left!';
+                    } else {
+                        messageElement.classList.add('chat-message');
 
-                var avatarElement = document.createElement('i');
-                var avatarText = document.createTextNode(messages.sender);
-                avatarElement.appendChild(avatarText);
-                avatarElement.style['background-color'] = getAvatarColor(messages.sender[0]);
+                        var avatarElement = document.createElement('i');
+                        var avatarText = document.createTextNode(messages.sender);
+                        avatarElement.appendChild(avatarText);
+                        avatarElement.style['background-color'] = getAvatarColor(messages.sender[0]);
 
-                messageElement.appendChild(avatarElement);
+                        messageElement.appendChild(avatarElement);
 
-                var usernameElement = document.createElement('span');
-                var usernameText = document.createTextNode(messages.sender);
-                usernameElement.appendChild(usernameText);
-                messageElement.appendChild(usernameElement);
-            }
+                        var usernameElement = document.createElement('span');
+                        var usernameText = document.createTextNode(messages.sender);
+                        usernameElement.appendChild(usernameText);
+                        messageElement.appendChild(usernameElement);
+                    }
 
-                var textElement = document.createElement('p');
-                var messageText = document.createTextNode(messages.content);
-                textElement.appendChild(messageText);
+                        var textElement = document.createElement('p');
+                        var messageText = document.createTextNode(messages.content);
+                        textElement.appendChild(messageText);
 
-                messageElement.appendChild(textElement);
+                        messageElement.appendChild(textElement);
 
-                messageArea.appendChild(messageElement);
-                messageArea.scrollTop = messageArea.scrollHeight;
+                        messageArea.appendChild(messageElement);
+                        messageArea.scrollTop = messageArea.scrollHeight;
 
-                var timeElement = document.createElement('p');
-                var messageDate = document.createTextNode(messages.createdDateTime);
-                timeElement.appendChild(messageDate);
+                        var timeElement = document.createElement('p');
+                        var messageDate = document.createTextNode(messages.createdDateTime);
+                        timeElement.appendChild(messageDate);
 
-                messageElement.appendChild(timeElement);
+                        messageElement.appendChild(timeElement);
 
-                messageArea.appendChild(messageElement);
-                messageArea.scrollTop = messageArea.scrollHeight;
+                        messageArea.appendChild(messageElement);
+                        messageArea.scrollTop = messageArea.scrollHeight;
+
+    }
+
+
     }
 
 
