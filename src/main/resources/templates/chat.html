@@ -19,7 +19,7 @@
                 <input type="text" id="userID" th:value="${user.userID}" autocomplete="off" class="hidden form-control" />
             </div>
             <div class="form-group">
-                <button type="submit" class="accent username-submit">Start Chatting</button>
+                <button type="submit" id="username-submit-button" class="accent username-submit">Start Chatting</button>
             </div>
         </form>
     </div>
@@ -40,7 +40,7 @@
             <div class="form-group">
                 <div class="input-group clearfix">
                     <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                    <button type="submit" class="primary">Send</button>
+                    <button type="submit"  class="primary">Send</button>
                 </div>
             </div>
         </form>
@@ -59,7 +59,7 @@
             <div class="form-group">
                 <div class="input-group clearfix">
                     <input type="text" id="roomName"  th:field="*{roomName}" placeholder="enter room name"  class="form-control"/>
-                    <button type="submit" class="primary">Send</button>
+                    <button type="submit" id="roomForm-submit-button" class="primary">Send</button>
                 </div>
             </div>
         </form>
