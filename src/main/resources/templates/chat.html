@@ -50,16 +50,13 @@
                 </div>
             </div>
         </form>
-        <form id="selectRoomForm" name="selectRoomForm" th:if="${rooms != null}">
-            <div class="input-group custom-search-form">
 
-                <button type="submit" class="primary">Choose room</button>
-            </div>
-        </form>
+        <a th:href="@{'/users/' + ${user.userID} + '/chat/rooms/change'}" class="btn btn-lg btn-warning btn-block">Choose room</a>
+
         <form id="roomForm" name="roomForm" method="post" th:action="@{'/users/' + ${user.userID} + '/chat/rooms/create'}" th:object="${chatRoom}" style="padding-top: 10px;">
             <div class="form-group">
                 <div class="input-group clearfix">
-                    <input type="text" id="roomName"  th:field="*{roomName}" placeholder="enter room name"  class="form-control"/>
+                    <input type="text" id="roomName"  th:field="*{roomName}" placeholder="Add room "  class="form-control"/>
                     <button type="submit" id="roomForm-submit-button" class="primary">Send</button>
                 </div>
             </div>
