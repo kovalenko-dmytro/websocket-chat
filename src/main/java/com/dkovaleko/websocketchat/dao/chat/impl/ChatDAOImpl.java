@@ -54,4 +54,12 @@ public class ChatDAOImpl implements ChatDAO {
                 params,
                 new ChatMessageRowMapper());
     }
+
+    @Override
+    public void delete(long restoreOldMessagesInterval) {
+
+        Object[] params = {restoreOldMessagesInterval};
+
+        jdbcTemplate.update("DELETE FROM messages WHERE created < now() - INTERVAL ? hour ", params);
+    }
 }

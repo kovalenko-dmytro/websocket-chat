@@ -10,4 +10,6 @@ public interface ChatService {
     void save(ChatMessage chatMessage);
 
     List<ChatMessage> find(long roomID);
+
+    void delete(long restoreOldMessagesInterval);
 }
