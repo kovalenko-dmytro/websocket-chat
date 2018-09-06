@@ -7,6 +7,7 @@ import com.dkovaleko.websocketchat.service.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,6 +23,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void save(ChatMessage chatMessage) {
 
+        chatMessage.setCreatedDateTime(LocalDateTime.now());
         chatDAO.save(chatMessage);
     }
 

@@ -25,13 +25,14 @@ public class ChatDAOImpl implements ChatDAO {
         Object[] params = {
                 chatMessage.getMessageType().toString(),
                 chatMessage.getContent(),
-                chatMessage.getCreatedDateTime(),
                 chatMessage.getSenderID(),
-                chatMessage.getChatRoom().getRoomID()
+                chatMessage.getReceiverID(),
+                chatMessage.getChatRoom().getRoomID(),
+                chatMessage.getCreatedDateTime()
         };
 
-        jdbcTemplate.update("INSERT INTO messages (message_type, message_content, created, sender_id, room_id) " +
-                        "VALUES(?,?,?,?,?)",
+        jdbcTemplate.update("INSERT INTO messages (message_type, message_content, sender_id, receiver_id, room_id, created) " +
+                        "VALUES(?,?,?,?,?,?)",
                 params);
 
     }
@@ -41,9 +42,12 @@ public class ChatDAOImpl implements ChatDAO {
 
         Object[] params = {roomID, interval};
 
-        return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, m.created, m.sender_id, u.name, cr.room_id, cr.room_name " +
+        return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, " +
+                        "m.sender_id, m.receiver_id, m.created, sender.name sender, receiver.name receiver, " +
+                        "cr.room_id, cr.room_name " +
                         "FROM messages m " +
-                        "INNER JOIN users u ON m.sender_id = u.user_id " +
+                        "INNER JOIN users sender ON m.sender_id = sender.user_id " +
+                        "INNER JOIN users receiver ON m.receiver_id = receiver.user_id " +
                         "INNER JOIN chat_rooms cr ON m.room_id = cr.room_id " +
                         "WHERE m.room_id = ? AND m.created >= now() - INTERVAL ? hour " +
                         "ORDER BY m.created",

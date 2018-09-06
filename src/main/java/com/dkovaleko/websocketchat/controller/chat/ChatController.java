@@ -32,9 +32,9 @@ public class ChatController {
 
     @MessageMapping("/chat/sendMessage/{roomID}")
     @SendTo("/topic/public/{roomID}")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String roomID) {
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage,
+                                   @DestinationVariable String roomID) {
 
-        chatMessage.setCreatedDateTime(LocalDateTime.now());
         chatService.save(chatMessage);
 
         return chatMessage;
@@ -42,10 +42,11 @@ public class ChatController {
 
     @MessageMapping("/chat/addUser/{roomID}")
     @SendTo("/topic/public/{roomID}")
-    public List<ChatMessage> addUser(@Payload ChatMessage chatMessage, @DestinationVariable String roomID,
-                               SimpMessageHeaderAccessor headerAccessor) {
+    public List<ChatMessage> addUser(@Payload ChatMessage chatMessage,
+                                     @DestinationVariable String roomID,
+                                     SimpMessageHeaderAccessor headerAccessor) {
 
-        headerAccessor.getSessionAttributes().put("userName", chatMessage.getSender());
+        headerAccessor.getSessionAttributes().put("userName", chatMessage.getSenderName());
 
         chatMessage.setCreatedDateTime(LocalDateTime.now());
 

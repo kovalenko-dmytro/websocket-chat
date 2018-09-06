@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 
 public class ChatMessageRowMapper implements RowMapper<ChatMessage> {
 
@@ -18,13 +17,15 @@ public class ChatMessageRowMapper implements RowMapper<ChatMessage> {
                 resultSet.getLong("message_id"),
                 MessageType.valueOf(resultSet.getString("message_type")),
                 resultSet.getString("message_content"),
-                resultSet.getString("name"),
-                resultSet.getTimestamp("created").toLocalDateTime(),
+                resultSet.getString("sender"),
+                resultSet.getString("receiver"),
+                resultSet.getLong("sender_id"),
                 resultSet.getLong("sender_id"),
                 new ChatRoom(
                         resultSet.getLong("room_id"),
                         resultSet.getString("room_name")
-                )
+                ),
+                resultSet.getTimestamp("created").toLocalDateTime()
         );
     }
 }

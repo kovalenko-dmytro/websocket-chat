@@ -15,21 +15,26 @@ public class ChatMessage {
     private long messageID;
     private MessageType messageType;
     private String content;
-    private String sender;
-    private LocalDateTime createdDateTime;
+    private String senderName;
+    private String receiverName;
     private long senderID;
+    private long receiverID;
     private ChatRoom chatRoom;
+    private LocalDateTime createdDateTime;
     private List<ChatMessage> messages;
 
     public ChatMessage(long messageID, MessageType messageType, String content,
-                       String sender, LocalDateTime createdDateTime, long senderID, ChatRoom chatRoom) {
+                       String senderName, String receiverName, long senderID, long receiverID,
+                       ChatRoom chatRoom, LocalDateTime createdDateTime) {
 
         this.messageID = messageID;
         this.messageType = messageType;
         this.content = content;
-        this.sender = sender;
-        this.createdDateTime = createdDateTime;
+        this.senderName = senderName;
+        this.receiverName = receiverName;
         this.senderID = senderID;
+        this.receiverID = receiverID;
         this.chatRoom = chatRoom;
+        this.createdDateTime = createdDateTime;
     }
 }
