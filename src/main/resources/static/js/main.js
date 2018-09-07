@@ -10,6 +10,7 @@ var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
 
 var clickUserNameButton = null;
+var clickInviteButton = null;
 
 
 var stompClient = null;
@@ -142,6 +143,9 @@ function sendMessage(event) {
         clickUserNameButton = document.querySelectorAll('[id^="userNameButton"]');
         onClickUserNameButton();
 
+        clickInviteButton = document.querySelectorAll('[id^="inviteButton"]');
+        onClickInviteButton();
+
     }
 
     function renderMessage(messages) {
@@ -238,3 +242,16 @@ function sendMessage(event) {
                 }, false)
             }
     }
+
+    function onClickInviteButton(){
+
+                for(var i = 0; i < clickInviteButton.length; i++) {
+
+                    clickInviteButton[i].addEventListener('click', function() {
+
+                        $('#modelWindow').modal('show');
+
+                    }, false)
+                }
+        }
+

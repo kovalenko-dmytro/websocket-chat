@@ -36,6 +36,33 @@
         <div class="chat-header">
             <h2>Spring WebSocket Chat Demo</h2>
         </div>
+        <div class="modal fade" id="modelWindow" role="dialog">
+            <div class="modal-dialog modal-sm vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Select user</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="inviteMessageForm" name="inviteMessageForm">
+                            <div class="form-group">
+                                <div class="input-group clearfix">
+                                    <select id="user" name="user" class="form-control" >
+                                        <option th:each="user: ${users}"
+                                                th:value="${user.userID}"
+                                                th:text="${user.name}">
+                                        </option>
+                                    </select>
+                                    <button type="submit"  class="primary">Invite</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="connecting">
             Connecting...
         </div>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -48,6 +49,7 @@ public class UserController {
 
         User user = userService.find(userID);
 
+        view.addObject("users", userService.find().stream().filter(u -> !u.getName().equals(user.getName())).collect(Collectors.toList()));
         view.addObject("user", user);
         view.addObject("rooms",chatRoomService.find(userID));
         view.addObject("chatRoom", chatRoom);
