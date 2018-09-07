@@ -17,8 +17,10 @@ var username = null;
 var senderID = null;
 var receiverName = null;
 var receiverID = null;
+var roomValue = null;
 var roomID = null;
 var roomName = null;
+var createdByUserID = null;
 var messagePrefix = '';
 
 var colors = [
@@ -29,7 +31,10 @@ var colors = [
 function connect(event) {
     username = document.querySelector('#name').value.trim();
     senderID = document.querySelector('#userID').value.trim();
-    roomID = document.querySelector('#room').value;
+    roomValue = document.querySelector('#room').value.split('-');
+    roomID = roomValue[0];
+    createdByUserID = roomValue[1];
+
     roomName = document.querySelector('#room').options[ document.querySelector('#room').selectedIndex ].text;
 
     if(username) {
@@ -52,6 +57,28 @@ function onConnected() {
     var roomNameText = document.createTextNode('Chat: ' + roomName);
     roomNameHeader.appendChild(roomNameText);
     chatHeader.appendChild(roomNameHeader);
+    if(roomName != 'all' && createdByUserID === senderID) {
+
+        var inviteButton = document.createElement('button');
+        inviteButton.classList.add('btn');
+        inviteButton.classList.add('btn-success');
+        inviteButton.setAttribute("id", "inviteButton" + senderID);
+        var inviteButtonText = document.createTextNode('Invite users...');
+        inviteButton.appendChild(inviteButtonText);
+        chatHeader.appendChild(inviteButton);
+    }
+
+    if(roomName != 'all' && createdByUserID != senderID) {
+
+            var leaveButton = document.createElement('button');
+            leaveButton.classList.add('btn');
+            leaveButton.classList.add('btn-danger');
+            leaveButton.setAttribute("id", "leaveButton" + senderID);
+            var leaveButtonText = document.createTextNode('Leave this chat room...');
+            leaveButton.appendChild(leaveButtonText);
+            chatHeader.appendChild(leaveButton);
+        }
+
 
 
             // Subscribe to the Public Topic

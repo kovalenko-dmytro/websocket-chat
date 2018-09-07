@@ -11,4 +11,5 @@ public class ChatRoom {
 
     private long roomID;
     private String roomName;
+    private long createdByUserID;
 }

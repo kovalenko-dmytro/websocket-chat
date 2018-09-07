@@ -44,7 +44,7 @@ public class ChatDAOImpl implements ChatDAO {
 
         return jdbcTemplate.query("SELECT m.message_id, m.message_type, m.message_content, " +
                         "m.sender_id, m.receiver_id, m.created, sender.name sender, receiver.name receiver, " +
-                        "cr.room_id, cr.room_name " +
+                        "cr.room_id, cr.room_name, cr.user_id owner " +
                         "FROM messages m " +
                         "INNER JOIN users sender ON m.sender_id = sender.user_id " +
                         "INNER JOIN users receiver ON m.receiver_id = receiver.user_id " +

@@ -26,16 +26,14 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
     @Override
     public List<ChatRoom> find() {
 
-        return jdbcTemplate.query("SELECT room_id, room_name FROM chat_rooms",
+        return jdbcTemplate.query("SELECT room_id, room_name, user_id FROM chat_rooms",
                 new ChatRoomRowMapper());
     }
 
     @Override
     public void save(ChatRoom chatRoom, long userID) {
 
-        Object[] params = {chatRoom.getRoomName(), chatRoom.getRoomName(), userID};
-
-        jdbcTemplate.update("INSERT INTO chat_rooms (room_name) VALUES(?)", chatRoom.getRoomName()
+        jdbcTemplate.update("INSERT INTO chat_rooms (room_name, user_id) VALUES(?,?)", chatRoom.getRoomName(), userID
                 );
         jdbcTemplate.update("INSERT INTO chat_room_user (room_id, user_id) " +
                         "VALUES((SELECT room_id FROM chat_rooms WHERE room_name = ?), ?)", chatRoom.getRoomName(), userID
@@ -47,7 +45,7 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
 
         Object[] params = {userID};
 
-        return jdbcTemplate.query("SELECT cr.room_id, cr.room_name FROM chat_rooms cr " +
+        return jdbcTemplate.query("SELECT cr.room_id, cr.room_name, cr.user_id FROM chat_rooms cr " +
                         "LEFT JOIN chat_room_user cru ON cr.room_id = cru.room_id " +
                         "WHERE cr.room_id = 1 OR cru.user_id = ? ",
                 params,

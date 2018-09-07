@@ -20,7 +20,7 @@
             </div>
             <select id="room" name="room" class="form-control" >
                 <option th:each="room: ${rooms}"
-                        th:value="${room.roomID}"
+                        th:value="${room.roomID} + '-' + ${room.createdByUserID}"
                         th:text="${room.roomName}">
                 </option>
             </select>

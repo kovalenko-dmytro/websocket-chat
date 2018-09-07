@@ -23,7 +23,8 @@ public class ChatMessageRowMapper implements RowMapper<ChatMessage> {
                 resultSet.getLong("sender_id"),
                 new ChatRoom(
                         resultSet.getLong("room_id"),
-                        resultSet.getString("room_name")
+                        resultSet.getString("room_name"),
+                        resultSet.getLong("owner")
                 ),
                 resultSet.getTimestamp("created").toLocalDateTime()
         );

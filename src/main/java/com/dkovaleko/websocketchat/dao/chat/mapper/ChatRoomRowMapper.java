@@ -13,7 +13,8 @@ public class ChatRoomRowMapper implements RowMapper<ChatRoom> {
 
         return new ChatRoom(
                 resultSet.getLong("room_id"),
-                resultSet.getString("room_name")
+                resultSet.getString("room_name"),
+                resultSet.getLong("user_id")
         );
     }
 }
