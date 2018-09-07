@@ -247,8 +247,11 @@ function sendMessage(event) {
 
                 for(var i = 0; i < clickInviteButton.length; i++) {
 
+
+
                     clickInviteButton[i].addEventListener('click', function() {
 
+                        $("#modelWindow").data( "roomID", roomID );
                         $('#modelWindow').modal('show');
 
                     }, false)

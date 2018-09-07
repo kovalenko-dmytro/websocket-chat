@@ -12,4 +12,5 @@ public interface ChatRoomDAO {
 
     List<ChatRoom> find(long userID);
 
+    void saveInviteUser(long roomID, long userID);
 }

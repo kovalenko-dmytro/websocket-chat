@@ -12,4 +12,6 @@ public interface ChatRoomService {
     void save(ChatRoom chatRoom, long userID);
 
     List<ChatRoom> find(long userID);
+
+    void saveInviteUser(long roomID, long userID);
 }

@@ -51,4 +51,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
         return chatRooms;
     }
+
+    @Override
+    public void saveInviteUser(long roomID, long userID) {
+
+        chatRoomDAO.saveInviteUser(roomID, userID);
+    }
 }

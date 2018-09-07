@@ -52,4 +52,13 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
                 new ChatRoomRowMapper());
     }
 
+    @Override
+    public void saveInviteUser(long roomID, long userID) {
+
+          Object[] params = {roomID, userID};
+
+        jdbcTemplate.update("INSERT INTO chat_room_user (room_id, user_id) " +
+                "VALUES(?, ?)", params);
+    }
+
 }
