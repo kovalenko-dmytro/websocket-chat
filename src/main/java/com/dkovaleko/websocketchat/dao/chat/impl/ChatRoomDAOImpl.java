@@ -5,8 +5,12 @@ import com.dkovaleko.websocketchat.dao.chat.mapper.ChatRoomRowMapper;
 import com.dkovaleko.websocketchat.dto.chat.ChatRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
@@ -27,9 +31,15 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
     }
 
     @Override
-    public void save(ChatRoom chatRoom) {
+    public void save(ChatRoom chatRoom, long userID) {
 
-        jdbcTemplate.update("INSERT INTO chat_rooms (room_name) VALUES(?)", chatRoom.getRoomName());
+        Object[] params = {chatRoom.getRoomName(), chatRoom.getRoomName(), userID};
+
+        jdbcTemplate.update("INSERT INTO chat_rooms (room_name) VALUES(?)", chatRoom.getRoomName()
+                );
+        jdbcTemplate.update("INSERT INTO chat_room_user (room_id, user_id) " +
+                        "VALUES((SELECT room_id FROM chat_rooms WHERE room_name = ?), ?)", chatRoom.getRoomName(), userID
+                );
     }
 
     @Override
@@ -38,9 +48,10 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
         Object[] params = {userID};
 
         return jdbcTemplate.query("SELECT cr.room_id, cr.room_name FROM chat_rooms cr " +
-                        "JOIN chat_room_user cru " +
-                        "WHERE cr.room_id = cru.room_id AND cru.user_id = ? OR cr.room_name = 'all'",
+                        "LEFT JOIN chat_room_user cru ON cr.room_id = cru.room_id " +
+                        "WHERE cr.room_id = 1 OR cru.user_id = ? ",
                 params,
                 new ChatRoomRowMapper());
     }
+
 }

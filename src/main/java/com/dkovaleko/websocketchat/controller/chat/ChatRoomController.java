@@ -26,7 +26,7 @@ public class ChatRoomController {
 
         ModelAndView view = new ModelAndView();
 
-        chatRoomService.save(chatRoom);
+        chatRoomService.save(chatRoom, userID);
 
         view.setViewName("redirect:/users/" + userID + "/chat" + "");
 

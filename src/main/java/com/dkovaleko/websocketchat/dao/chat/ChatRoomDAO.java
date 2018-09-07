@@ -8,7 +8,8 @@ public interface ChatRoomDAO {
 
     List<ChatRoom> find();
 
-    void save(ChatRoom chatRoom);
+    void save(ChatRoom chatRoom, long userID);
 
     List<ChatRoom> find(long userID);
+
 }
