@@ -9,4 +9,6 @@ public interface ChatRoomDAO {
     List<ChatRoom> find();
 
     void save(ChatRoom chatRoom);
+
+    List<ChatRoom> find(long userID);
 }

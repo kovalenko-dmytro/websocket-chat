@@ -30,9 +30,10 @@ public class ChatController {
         this.chatRoomService = chatRoomService;
     }
 
-    @MessageMapping("/chat/sendMessage/{roomID}")
-    @SendTo("/topic/public/{roomID}")
+    @MessageMapping("/chat/{userID}/sendMessage/{roomID}")
+    @SendTo("/topic/public/{userID}/{roomID}")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage,
+                                   @DestinationVariable String userID,
                                    @DestinationVariable String roomID) {
 
         chatService.save(chatMessage);
@@ -40,9 +41,10 @@ public class ChatController {
         return chatMessage;
     }
 
-    @MessageMapping("/chat/addUser/{roomID}")
-    @SendTo("/topic/public/{roomID}")
+    @MessageMapping("/chat/{userID}/addUser/{roomID}")
+    @SendTo("/topic/public/{userID}/{roomID}")
     public List<ChatMessage> addUser(@Payload ChatMessage chatMessage,
+                                     @DestinationVariable String userID,
                                      @DestinationVariable String roomID,
                                      SimpMessageHeaderAccessor headerAccessor) {
 

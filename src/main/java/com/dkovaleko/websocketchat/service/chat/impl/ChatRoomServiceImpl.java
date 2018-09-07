@@ -27,4 +27,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     public void save(ChatRoom chatRoom) {
         chatRoomDAO.save(chatRoom);
     }
+
+    @Override
+    public List<ChatRoom> find(long userID) {
+
+        return chatRoomDAO.find(userID);
+    }
 }

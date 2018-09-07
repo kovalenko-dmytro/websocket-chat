@@ -49,7 +49,7 @@ public class UserController {
         User user = userService.find(userID);
 
         view.addObject("user", user);
-        view.addObject("rooms",chatRoomService.find());
+        view.addObject("rooms",chatRoomService.find(userID));
         view.addObject("chatRoom", chatRoom);
         view.setViewName("chat");
 

@@ -55,10 +55,10 @@ function onConnected() {
 
 
             // Subscribe to the Public Topic
-                stompClient.subscribe('/topic/public/{' + roomID + '}', onMessageReceived);
+                stompClient.subscribe('/topic/public/{' + senderID + '}/{' + roomID + '}', onMessageReceived);
 
                 // Tell your username to the server
-                stompClient.send("/app/chat/addUser/" + roomID + "",
+                stompClient.send("/app/chat/" + senderID + "/addUser/" + roomID + "",
                     {},
                     JSON.stringify({senderName: username, 'senderID': senderID, 'receiverName': (receiverName ? receiverName : username), 'receiverID': (receiverID ? receiverID : senderID), 'chatRoom': {'roomID': roomID, 'roomName': roomName}, messageType: 'JOIN'})
                 )
@@ -88,7 +88,7 @@ function sendMessage(event) {
                         messageType: 'CHAT'
                     };
 
-            stompClient.send("/app/chat/sendMessage/" + roomID, {}, JSON.stringify(chatMessage));
+            stompClient.send("/app/chat/" + senderID + "/sendMessage/" + roomID + "", {}, JSON.stringify(chatMessage));
             messageInput.value = '';
 
 

@@ -31,4 +31,16 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
 
         jdbcTemplate.update("INSERT INTO chat_rooms (room_name) VALUES(?)", chatRoom.getRoomName());
     }
+
+    @Override
+    public List<ChatRoom> find(long userID) {
+
+        Object[] params = {userID};
+
+        return jdbcTemplate.query("SELECT cr.room_id, cr.room_name FROM chat_rooms cr " +
+                        "JOIN chat_room_user cru " +
+                        "WHERE cr.room_id = cru.room_id AND cru.user_id = ? OR cr.room_name = 'all'",
+                params,
+                new ChatRoomRowMapper());
+    }
 }
