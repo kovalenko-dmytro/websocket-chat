@@ -57,4 +57,12 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
                 "VALUES(?, ?)", params);
     }
 
+    @Override
+    public void leaveRoom(long roomID, long userID) {
+
+        Object[] params = {roomID, userID};
+
+        jdbcTemplate.update("DELETE FROM chat_room_user WHERE room_id = ? AND user_id = ?", params);
+    }
+
 }

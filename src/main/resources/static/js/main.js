@@ -11,6 +11,7 @@ var connectingElement = document.querySelector('.connecting');
 
 var clickUserNameButton = null;
 var clickInviteButton = null;
+var clickLeaveButton = null;
 
 
 var stompClient = null;
@@ -71,6 +72,8 @@ function onConnected() {
 
     if(roomName != 'all' && createdByUserID != senderID) {
 
+
+
             var leaveButton = document.createElement('button');
             leaveButton.classList.add('btn');
             leaveButton.classList.add('btn-danger');
@@ -78,7 +81,7 @@ function onConnected() {
             var leaveButtonText = document.createTextNode('Leave this chat room...');
             leaveButton.appendChild(leaveButtonText);
             chatHeader.appendChild(leaveButton);
-        }
+    }
 
 
 
@@ -145,6 +148,9 @@ function sendMessage(event) {
 
         clickInviteButton = document.querySelectorAll('[id^="inviteButton"]');
         onClickInviteButton();
+
+        clickLeaveButton = document.querySelectorAll('[id^="leaveButton"]');
+        onClickLeaveButton();
 
     }
 
@@ -248,7 +254,6 @@ function sendMessage(event) {
                 for(var i = 0; i < clickInviteButton.length; i++) {
 
 
-
                     clickInviteButton[i].addEventListener('click', function() {
 
 
@@ -256,5 +261,20 @@ function sendMessage(event) {
 
                     }, false)
                 }
+     }
+
+     function onClickLeaveButton(){
+
+        for(var i = 0; i < clickLeaveButton.length; i++) {
+
+               clickLeaveButton[i].addEventListener('click', function() {
+
+                    document.getElementById('leaveUserID').value = senderID;
+                    document.getElementById('leaveRoomID').value = roomID;
+                    document.getElementById('leaveRoomSubmit').click();
+               }, false)
+
         }
+
+     }
 

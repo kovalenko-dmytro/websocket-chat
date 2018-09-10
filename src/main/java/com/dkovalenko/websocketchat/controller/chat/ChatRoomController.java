@@ -44,6 +44,20 @@ public class ChatRoomController {
         return view;
     }
 
+    @PostMapping(value = "/users/{userID}/chat/rooms/leave")
+    public ModelAndView leave(@PathVariable(value = "userID") long userID,
+                               @RequestParam String leaveUserID,
+                               @RequestParam String leaveRoomID) {
+
+        ModelAndView view = new ModelAndView();
+
+        chatRoomService.leaveRoom(Long.parseLong(leaveRoomID), Long.parseLong(leaveUserID));
+
+        view.setViewName("redirect:/users/" + userID + "/chat" + "");
+
+        return view;
+    }
+
     @GetMapping(value = "/users/{userID}/chat/rooms/change")
     public ModelAndView changeRoom(@PathVariable(value = "userID") long userID) {
 

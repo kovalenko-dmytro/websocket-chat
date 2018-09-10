@@ -98,6 +98,16 @@
                 </div>
             </div>
         </form>
+
+        <form class="hidden" id="leaveMessageForm" name="leaveMessageForm"  method="post" th:action="@{'/users/' + ${user.userID} + '/chat/rooms/leave'}">
+            <div class="form-group">
+                <input type="text" id="leaveUserID"  name="leaveUserID" class="form-control"/>
+                <input type="text" id="leaveRoomID"  name="leaveRoomID" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <button id="leaveRoomSubmit" type="submit"></button>
+            </div>
+        </form>
     </div>
 </div>
 
