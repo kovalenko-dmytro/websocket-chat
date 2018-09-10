@@ -45,21 +45,25 @@
                     <div class="modal-body">
                         <form id="inviteMessageForm" name="inviteMessageForm"  method="post" th:action="@{'/users/' + ${user.userID} + '/chat/rooms/invite'}">
                             <div class="form-group">
-                                <div class="input-group clearfix">
-                                    <select id="user" name="inviteUserID" class="form-control" >
+                                    <label for="inviteUserID">Choose user</label>
+                                    <select id="inviteUserID" name="inviteUserID" class="form-control" >
                                         <option th:each="user: ${users}"
                                                 th:value="${user.userID}"
                                                 th:text="${user.name}">
                                         </option>
                                     </select>
-                                    <select id="roomID" name="inviteRoomID" class="form-control" >
+                            </div>
+                            <div class="form-group">
+                                    <label for="inviteRoomID">Choose room</label>
+                                    <select id="inviteRoomID" name="inviteRoomID" class="form-control" >
                                         <option th:each="chatRoom: ${rooms}"
                                                 th:value="${chatRoom.roomID}"
                                                 th:text="${chatRoom.roomName}">
                                         </option>
                                     </select>
-                                    <button type="submit"  class="primary">Invite</button>
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit"  class="primary">Invite</button>
                             </div>
                         </form>
                     </div>
