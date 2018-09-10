@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -65,6 +67,14 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
 
         jdbcTemplate.update("DELETE FROM chat_room_user WHERE room_id = ? AND user_id = ?",
                 params);
+    }
+
+    @Override
+    public int findAlreadyInvitedUser(long roomID, long userID) {
+
+        Object[] params = {roomID, userID};
+
+        return jdbcTemplate.queryForList("SELECT room_id, user_id FROM chat_room_user WHERE room_id = ? AND user_id = ? ", params).size();
     }
 
 }

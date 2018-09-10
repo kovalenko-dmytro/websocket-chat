@@ -15,4 +15,6 @@ public interface ChatRoomDAO {
     void saveInviteUser(long roomID, long userID);
 
     void leaveRoom(long roomID, long userID);
+
+    int findAlreadyInvitedUser(long roomID, long userID);
 }

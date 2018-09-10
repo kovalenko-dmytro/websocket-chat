@@ -53,9 +53,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveInviteUser(long roomID, long userID) {
 
-        chatRoomDAO.saveInviteUser(roomID, userID);
+        int result = chatRoomDAO.findAlreadyInvitedUser(roomID, userID);
+
+        if (result == 0) {
+            chatRoomDAO.saveInviteUser(roomID, userID);
+        }
     }
 
     @Override
