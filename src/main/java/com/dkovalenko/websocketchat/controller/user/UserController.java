@@ -42,13 +42,19 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{userID}/chat")
-    public ModelAndView chat(@PathVariable(value = "userID") long userID, ChatRoom chatRoom) {
+    public ModelAndView chat(@PathVariable(value = "userID") long userID,
+                             ChatRoom chatRoom) {
 
         ModelAndView view = new ModelAndView();
 
         User user = userService.find(userID);
 
-        view.addObject("users", userService.find().stream().filter(u -> !u.getName().equals(user.getName())).collect(Collectors.toList()));
+        view.addObject("users",
+                userService.find()
+                        .stream().filter(u -> !u.getName().equals(user.getName()))
+                        .collect(Collectors.toList())
+        );
+
         view.addObject("user", user);
         view.addObject("rooms",chatRoomService.find(userID));
         view.addObject("chatRoom", chatRoom);

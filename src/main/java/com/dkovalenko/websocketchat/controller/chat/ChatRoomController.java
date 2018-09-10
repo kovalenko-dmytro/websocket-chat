@@ -32,7 +32,7 @@ public class ChatRoomController {
 
     @PostMapping(value = "/users/{userID}/chat/rooms/invite")
     public ModelAndView invite(@PathVariable(value = "userID") long userID,
-                                    @RequestParam String inviteUserID,
+                               @RequestParam String inviteUserID,
                                @RequestParam String inviteRoomID) {
 
         ModelAndView view = new ModelAndView();

@@ -54,7 +54,8 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
           Object[] params = {roomID, userID};
 
         jdbcTemplate.update("INSERT INTO chat_room_user (room_id, user_id) " +
-                "VALUES(?, ?)", params);
+                "VALUES(?, ?)",
+                params);
     }
 
     @Override
@@ -62,7 +63,8 @@ public class ChatRoomDAOImpl implements ChatRoomDAO {
 
         Object[] params = {roomID, userID};
 
-        jdbcTemplate.update("DELETE FROM chat_room_user WHERE room_id = ? AND user_id = ?", params);
+        jdbcTemplate.update("DELETE FROM chat_room_user WHERE room_id = ? AND user_id = ?",
+                params);
     }
 
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum ConstantsEnum {
 
-    LAST_MESSAGES_INTERVAL_IN_HOURS(720L),
+    LAST_MESSAGES_INTERVAL_IN_HOURS(24L),
     DELETE_OLD_MESSAGES_INTERVAL_IN_HOURS(720L);
 
     private long value;
