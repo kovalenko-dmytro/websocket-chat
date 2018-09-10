@@ -5,10 +5,7 @@ import com.dkovaleko.websocketchat.dto.user.User;
 import com.dkovaleko.websocketchat.service.chat.ChatRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -34,17 +31,14 @@ public class ChatRoomController {
         return view;
     }
 
-    @PostMapping(value = "/users/{userID}/chat/rooms/{roomID}/invite")
+    @PostMapping(value = "/users/{userID}/chat/rooms/invite")
     public ModelAndView invite(@PathVariable(value = "userID") long userID,
-                                   @PathVariable(value = "roomID") long roomID,
-                                   @ModelAttribute("user") User user) {
+                                    @RequestParam String inviteUserID,
+                               @RequestParam String inviteRoomID) {
 
         ModelAndView view = new ModelAndView();
 
-        System.out.println(roomID);
-        System.out.println(user.getUserID());
-
-        chatRoomService.saveInviteUser(roomID, user.getUserID());
+        chatRoomService.saveInviteUser(Long.parseLong(inviteRoomID), Long.parseLong(inviteUserID));
 
         view.setViewName("redirect:/users/" + userID + "/chat" + "");
 

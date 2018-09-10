@@ -251,7 +251,7 @@ function sendMessage(event) {
 
                     clickInviteButton[i].addEventListener('click', function() {
 
-                        $("#modelWindow").data( "roomID", roomID );
+
                         $('#modelWindow').modal('show');
 
                     }, false)

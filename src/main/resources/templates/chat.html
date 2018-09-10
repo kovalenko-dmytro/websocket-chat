@@ -43,13 +43,19 @@
                         <h4 class="modal-title">Select user</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="inviteMessageForm" name="inviteMessageForm"  method="post" th:action="@{'/users/' + ${user.userID} + '/chat/rooms/' + [[${roomID}]] + '/invite'}" th:object="${user}">
+                        <form id="inviteMessageForm" name="inviteMessageForm"  method="post" th:action="@{'/users/' + ${user.userID} + '/chat/rooms/invite'}">
                             <div class="form-group">
                                 <div class="input-group clearfix">
-                                    <select id="user" name="user" class="form-control" >
+                                    <select id="user" name="inviteUserID" class="form-control" >
                                         <option th:each="user: ${users}"
                                                 th:value="${user.userID}"
                                                 th:text="${user.name}">
+                                        </option>
+                                    </select>
+                                    <select id="roomID" name="inviteRoomID" class="form-control" >
+                                        <option th:each="chatRoom: ${rooms}"
+                                                th:value="${chatRoom.roomID}"
+                                                th:text="${chatRoom.roomName}">
                                         </option>
                                     </select>
                                     <button type="submit"  class="primary">Invite</button>
